@@ -1,51 +1,53 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const MONGO_URI = 'mongodb+srv://jukim98:XfKATZh69OpubsE7@cluster0.zmnzr.mongodb.net/barcart?retryWrites=true&w=majority';
+const MONGO_URI =
+  "mongodb+srv://jukim98:XfKATZh69OpubsE7@cluster0.zmnzr.mongodb.net/barcart?retryWrites=true&w=majority";
 
-mongoose.connect(MONGO_URI, {
-  // options for the connect method to parse the URI
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  // sets the name of the DB that our collections are part of
-  dbName: 'barcart'
-})
-  .then(() => console.log('Connected to Mongo DB.'))
-  .catch(err => console.log(err));
-
+mongoose
+  .connect(MONGO_URI, {
+    // options for the connect method to parse the URI
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // sets the name of the DB that our collections are part of
+    dbName: "barcart",
+  })
+  .then(() => console.log("Connected to Mongo DB."))
+  .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
-    id: String,
-    name: String,
-    category: String,
-    glassware: String,
-    instructions: String,
-    thumbnail: String,
-    ingredients: [
-        {
-        ingredientName: String,
-        quantity: Number,
-        unit: String,
-        }
-    ],
-  });
-  const Recipe = mongoose.model('recipe', recipeSchema);
+  id: String,
+  name: String,
+  category: String,
+  glassware: String,
+  instructions: String,
+  thumbnail: String,
+  ingredients: [
+    {
+      ingredientName: String,
+      quantity: Number,
+      unit: String,
+    },
+  ],
+  versionKey: false,
+});
+const Recipe = mongoose.model("recipe", recipeSchema);
 
-  const fridgeSchema = new Schema({
-    ingredientName: String,
-    quantity: Number,
-    unit: String,
-  });
-  const Fridge = mongoose.model('fridge', fridgeSchema);
+const fridgeSchema = new Schema({
+  ingredientName: String,
+  quantity: Number,
+  unit: String,
+  versionKey: false,
+});
+const Fridge = mongoose.model("fridge", fridgeSchema);
 
+module.exports = {
+  Recipe,
+  Fridge,
+};
 
-  module.exports = {
-    Recipe,
-    Fridge
-  };
-
-  /*
+/*
   idDrink:"17837",
         strDrink:"Adam",
         strCategory:"Ordinary Drink",
