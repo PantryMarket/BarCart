@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 
 const apiRouter = require('./routes/apiRouter');
+const fridgeRouter = require('./routes/fridgeRouter');
 
 const PORT = 3000;
 
@@ -11,6 +12,8 @@ app.use(express.json())
 /**
  * start server
  */
+
+app.use('/api/fridge', fridgeRouter);
 app.use('/api', apiRouter);
 
 app.use((err, req, res, next) => {
