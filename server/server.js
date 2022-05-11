@@ -3,6 +3,7 @@ const express = require("express");
 
 const app = express();
 
+
 const apiRouter = require("./routes/apiRouter");
 const fridgeRouter = require("./routes/fridgeRouter");
 const fridgeController = require("./controllers/fridgeController");
@@ -11,6 +12,7 @@ const apiController = require("./controllers/apiController");
 const PORT = 3000;
 
 app.use(express.json());
+
 
 app.get(
   "/api/possible",

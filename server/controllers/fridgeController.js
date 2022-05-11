@@ -3,6 +3,7 @@ const { Fridge } = require("../models/drinkModals.js");
 const fridgeController = {};
 
 fridgeController.getIngredients = async (req, res, next) => {
+
   try {
     res.locals.allIng = await Fridge.find({}).exec();
     return next();
@@ -21,6 +22,7 @@ fridgeController.getIngArr = async (req, res, next) => {
     const myIngs = [];
     for (let i = 0; i < allIng.length; i++) {
       myIngs.push(allIng[i].ingredientName);
+
     }
     res.locals.allIng = myIngs;
     return next();
@@ -87,7 +89,18 @@ fridgeController.updateIngredient = async (req, res, next) => {
   }
 };
 
+fridgeController.updateIngredient = async (req, res, next) => {
+    const { ingredientName, quantity } = req.body;
+    try {
+      await Fridge.updateOne({ingredientName: ingredientName}, {quantity: quantity});
+      return next();
+    } catch(err) {
+      return next(err);
+    }
+};
+
 fridgeController.deleteIngredient = async (req, res, next) => {
+
   const { ingredientName } = req.body;
   try {
     res.locals.deleteIng = await Fridge.findOneAndDelete({
@@ -101,6 +114,7 @@ fridgeController.deleteIngredient = async (req, res, next) => {
       message: { err: "Error occurred in fridgeController.deleteIngredient" },
     });
   }
+
 };
 
 module.exports = fridgeController;

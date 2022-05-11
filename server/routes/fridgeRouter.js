@@ -1,3 +1,4 @@
+
 const express = require("express");
 
 const fridgeController = require("../controllers/fridgeController");
@@ -37,3 +38,4 @@ router.delete("/", fridgeController.deleteIngredient, (req, res) =>
 );
 
 module.exports = router;
+
