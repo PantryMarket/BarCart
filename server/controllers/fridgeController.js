@@ -1,36 +1,106 @@
-const {Fridge} = require('../models/drinkModals.js')
-
+const { Fridge } = require("../models/drinkModals.js");
 
 const fridgeController = {};
 
 fridgeController.getIngredients = async (req, res, next) => {
-    try {
-      res.locals.ingredients = await Fridge.find({}).exec();
-      return next();
-    } catch(err) {
-      return next(err);
-    }
+  try {
+    res.locals.allIng = await Fridge.find({}).exec();
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.getIngredients: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.getIngredients" },
+    });
+  }
 };
 
-
-fridgeController.addIngredient = async (req, res, next) => {
-    const { ingredientName, quantity, unit } = req.body;
-    try {
-      await Fridge.create({ ingredientName, quantity, unit });
-      return next();
-    } catch(err) {
-      return next(err);
+fridgeController.getIngArr = async (req, res, next) => {
+  try {
+    const allIng = await Fridge.find({}).exec();
+    const myIngs = [];
+    for (let i = 0; i < allIng.length; i++) {
+      myIngs.push(allIng[i].ingredientName);
     }
+    res.locals.allIng = myIngs;
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.getIngredients: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.getIngredients" },
+    });
+  }
+};
+
+fridgeController.findIngredient = async (req, res, next) => {
+  const { ingredientName } = req.params;
+  try {
+    res.locals.findIng = await Fridge.findOne({ ingredientName });
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.findIngredient: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.findIngredient" },
+    });
+  }
+};
+
+//caveat is that you can accidentally make duplicate sambucas lol
+fridgeController.addIngredient = async (req, res, next) => {
+  const { ingredientName, quantity, unit } = req.body;
+  try {
+    res.locals.addIng = await Fridge.create({ ingredientName, quantity, unit });
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.addIngredient: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.addIngredient" },
+    });
+  }
+};
+
+// https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
+fridgeController.updateIngredient = async (req, res, next) => {
+  const { ingredientName, quantity } = req.body;
+  const filter = { ingredientName: ingredientName };
+  const update = { quantity: quantity };
+  const options = {
+    new: true, //if true, return the modified document rather than the original
+    upsert: true, //bool - creates the object if it doesn't exist
+  };
+  try {
+    res.locals.updatedIng = await Fridge.findOneAndUpdate(
+      filter,
+      update,
+      options
+    );
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.updateIngredient: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.updateIngredient" },
+    });
+  }
 };
 
 fridgeController.deleteIngredient = async (req, res, next) => {
-    const { name } = req.body;
-    try {
-      res.locals.ingredients = await Fridge.find({}).exec();
-      return next();
-    } catch(err) {
-      return next(err);
-    }
+  const { ingredientName } = req.body;
+  try {
+    res.locals.deleteIng = await Fridge.findOneAndDelete({
+      ingredientName: ingredientName,
+    }); //or .deleteOne or .remove - findOne returns deleted doc
+    return next();
+  } catch (err) {
+    return next({
+      log: `fridgeController.deleteIngredient: ERROR: ${err}`,
+      status: 400,
+      message: { err: "Error occurred in fridgeController.deleteIngredient" },
+    });
+  }
 };
 
 module.exports = fridgeController;
