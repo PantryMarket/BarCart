@@ -3,11 +3,10 @@ const router = express.Router();
 
 const apiController = require('../controllers/apiController');
 
-router.get('/', 
-apiController.getDrinks,
- (req, res, next) => {
+router.get('/', apiController.getDrinks, (req, res, next) => {
+  console.log('Returning all drinks');
   return res.status(200).json(res.locals.allDrinks);
-  // return res.status(200).json({test: "hello"});
-})
+  // return res.status(200).json({ test: 'hello' });
+});
 
 module.exports = router;
