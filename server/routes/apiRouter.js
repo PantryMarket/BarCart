@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
 
-const apiController = require("../controllers/apiController");
+const apiController = require('../controllers/apiController');
 
 //returns an array of all recipe objects
-router.get("/", apiController.getRecipes, (req, res, next) => {
+router.get('/', apiController.getRecipes, (req, res, next) => {
   return res.status(200).json(res.locals.allRecipes);
 });
 
 //returns a singular recipe obj (doesn't work if your name has symbols)
-router.get("/:recipeName", apiController.findRecipe, (req, res, next) => {
+router.get('/:recipeName', apiController.findRecipe, (req, res, next) => {
   return res.status(200).json(res.locals.findRecipe);
 });
 

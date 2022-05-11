@@ -1,4 +1,4 @@
-const { Recipe } = require("../models/drinkModals.js");
+const { Recipe } = require('../models/drinkModals.js');
 
 const apiController = {};
 
@@ -11,7 +11,7 @@ apiController.getRecipes = async (req, res, next) => {
   } catch (err) {
     return next({
       status: 400,
-      message: "Failed to retrieve all drinks",
+      message: 'Failed to retrieve all drinks',
     });
   }
 };
@@ -25,7 +25,7 @@ apiController.findRecipe = async (req, res, next) => {
     return next({
       log: `apiController.findRecipe: ERROR: ${err}`,
       status: 400,
-      message: { err: "Error occurred in apiController.findRecipe" },
+      message: { err: 'Error occurred in apiController.findRecipe' },
     });
   }
 };
@@ -37,7 +37,7 @@ apiController.possibleRecipes = async (req, res, next) => {
     res.locals.possibleRecipes = await Recipe.aggregate([
       {
         $match: {
-          "ingredients.ingredientName": {
+          'ingredients.ingredientName': {
             $in: res.locals.allIng,
           },
         },
@@ -46,10 +46,10 @@ apiController.possibleRecipes = async (req, res, next) => {
         $addFields: {
           OtherIngredient: {
             $filter: {
-              input: "$ingredients.ingredientName",
+              input: '$ingredients.ingredientName',
               cond: {
                 $not: {
-                  $in: ["$$this", res.locals.allIng],
+                  $in: ['$$this', res.locals.allIng],
                 },
               },
             },
@@ -72,7 +72,7 @@ apiController.possibleRecipes = async (req, res, next) => {
     return next({
       log: `apiController.possibleRecipes: ERROR: ${err}`,
       status: 400,
-      message: { err: "Error occurred in apiController.possibleRecipes" },
+      message: { err: 'Error occurred in apiController.possibleRecipes' },
     });
   }
 };
