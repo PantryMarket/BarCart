@@ -52,7 +52,7 @@ const App = () => {
         ...prevForm,
         [e.target.name]:
           e.target.type === 'number'
-            ? parseInt(e.target.value)
+            ? parseFloat(e.target.value)
             : e.target.value,
       };
     });
@@ -72,7 +72,7 @@ const App = () => {
       .then(() => {
         let hasDup = false;
         const arr = ingredients.reduce((acc, curr) => {
-          if (curr.ingredientName === fridgeForm.ingredientName) {
+          if (curr.ingredientName === fridgeForm.ingredientName.trim()) {
             curr.quantity += fridgeForm.quantity;
             hasDup = true;
           }
@@ -151,7 +151,12 @@ const App = () => {
             ></Route>
             <Route
               path="/:id"
-              element={<RecipeCard allDrink={allDrink} />}
+              element={
+                ingredients.length > 0 &&
+                allDrink.length > 0 && (
+                  <RecipeCard allDrink={allDrink} fridge={ingredients} />
+                )
+              }
             ></Route>
           </Routes>
         </div>

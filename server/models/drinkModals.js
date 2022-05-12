@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const MONGO_URI =
-  "mongodb+srv://jukim98:XfKATZh69OpubsE7@cluster0.zmnzr.mongodb.net/barcart?retryWrites=true&w=majority";
+  'mongodb+srv://jukim98:XfKATZh69OpubsE7@cluster0.zmnzr.mongodb.net/barcart?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, {
@@ -9,38 +9,53 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     // sets the name of the DB that our collections are part of
-    dbName: "barcart",
+    dbName: 'barcart',
   })
-  .then(() => console.log("Connected to Mongo DB."))
+  .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
 
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
   id: String,
-  name: String,
+  name: {
+    type: String,
+    trim: true,
+  },
   category: String,
   glassware: String,
   instructions: String,
   thumbnail: String,
   ingredients: [
     {
-      ingredientName: String,
+      ingredientName: {
+        type: String,
+        trim: true,
+      },
       quantity: Number,
-      unit: String,
+      unit: {
+        type: String,
+        trim: true,
+      },
     },
   ],
   versionKey: false,
 });
-const Recipe = mongoose.model("recipe", recipeSchema);
+const Recipe = mongoose.model('recipe', recipeSchema);
 
 const fridgeSchema = new Schema({
-  ingredientName: String,
+  ingredientName: {
+    type: String,
+    trim: true,
+  },
   quantity: Number,
-  unit: String,
+  unit: {
+    type: String,
+    trim: true,
+  },
   versionKey: false,
 });
-const Fridge = mongoose.model("fridge", fridgeSchema);
+const Fridge = mongoose.model('fridge', fridgeSchema);
 
 module.exports = {
   Recipe,
