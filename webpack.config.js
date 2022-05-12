@@ -1,12 +1,12 @@
-const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './client/index.js',
+  entry: "./client/index.js",
 
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, '/dist'),
+    filename: "bundle.js",
+    path: path.join(__dirname, "/dist"),
   },
 
   module: {
@@ -15,21 +15,25 @@ module.exports = {
         test: /.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ["@babel/preset-env", "@babel/preset-react", "@shelf/jest-mongodb"],
+            plugins: [
+              "@babel/plugin-transform-runtime",
+              "@babel/transform-async-to-generator",
+            ],
           },
         },
       },
       {
         test: /\.scss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
 
   devServer: {
-    host: 'localhost',
+    host: "localhost",
     port: 8080,
     // enable HMR on the devServer
     hot: true,
@@ -38,17 +42,17 @@ module.exports = {
 
     static: {
       // match the output path
-      directory: path.resolve(__dirname, 'dist'),
+      directory: path.resolve(__dirname, "dist"),
       // match the output 'publicPath'
-      publicPath: '/',
+      publicPath: "/",
     },
 
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: { "Access-Control-Allow-Origin": "*" },
 
     //front end proxy. lets back end listen to whichever port youre on
     proxy: {
-      '/api/**': {
-        target: 'http://localhost:3000/',
+      "/api/**": {
+        target: "http://localhost:3000/",
         secure: false,
       },
     },
@@ -56,7 +60,7 @@ module.exports = {
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: './client/index.html',
+      template: "./client/index.html",
     }),
   ],
 };
