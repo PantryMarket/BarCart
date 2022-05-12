@@ -4,12 +4,13 @@ import { Button } from 'react-bootstrap';
 const Ingredients = (props) => {
   const { ingredients } = props;
   return (
-    <table class="table table-striped">
+    <table class="table table-light">
       <thead>
         <tr>
           <th scope="col">Item</th>
           <th scope="col">Quantity</th>
           <th scope="col">Measurement</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>

@@ -36,6 +36,7 @@ const recipeSchema = new Schema({
       unit: {
         type: String,
         trim: true,
+        default: 'shots',
       },
     },
   ],

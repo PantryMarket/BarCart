@@ -36,7 +36,7 @@ const FridgeForm = (props) => {
           />
         </div>
         <div class="col">
-          <button type="submit" class="btn btn-secondary">
+          <button type="submit" class="btn btn-success">
             ADD
           </button>
         </div>
