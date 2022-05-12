@@ -5,7 +5,7 @@ const apiController = {};
 apiController.getRecipes = async (req, res, next) => {
   try {
     const result = await Recipe.find({});
-    console.log(result);
+
     res.locals.allRecipes = result;
     return next();
   } catch (err) {
@@ -17,9 +17,9 @@ apiController.getRecipes = async (req, res, next) => {
 };
 
 apiController.findRecipe = async (req, res, next) => {
-  const { recipeName } = req.params;
+  const { id } = req.params;
   try {
-    res.locals.findRecipe = await Recipe.findOne({ name: recipeName });
+    res.locals.findRecipe = await Recipe.findById({ _id: id });
     return next();
   } catch (err) {
     return next({
