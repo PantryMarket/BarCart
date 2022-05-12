@@ -1,10 +1,37 @@
 import React, { Fragment } from 'react';
+import { Button } from 'react-bootstrap';
 
 const Ingredients = (props) => {
+  const { ingredients } = props;
   return (
-    <Fragment>
-      <h1>Hello from ingredients</h1>
-    </Fragment>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Measurement</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ingredients.map((ingredient) => {
+          return (
+            <tr>
+              <th scope="row">{ingredient.ingredientName}</th>
+              <td>{ingredient.quantity}</td>
+              <td>{ingredient.unit}</td>
+              <td>
+                <Button
+                  variant="danger"
+                  onClick={() => props.handleDelete(ingredient._id)}
+                >
+                  Delete Item
+                </Button>{' '}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 

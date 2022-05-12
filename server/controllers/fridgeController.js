@@ -64,9 +64,9 @@ fridgeController.addIngredient = async (req, res, next) => {
 
 // https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
 fridgeController.updateIngredient = async (req, res, next) => {
-  const { ingredientName, quantity } = req.body;
+  const { ingredientName, quantity, unit } = req.body;
   const filter = { ingredientName: ingredientName };
-  const update = { quantity: quantity };
+  const update = { quantity: quantity, unit: unit };
   const options = {
     new: true, //if true, return the modified document rather than the original
     upsert: true, //bool - creates the object if it doesn't exist
@@ -87,25 +87,11 @@ fridgeController.updateIngredient = async (req, res, next) => {
   }
 };
 
-fridgeController.updateIngredient = async (req, res, next) => {
-  const { ingredientName, quantity } = req.body;
-  try {
-    await Fridge.updateOne(
-      { ingredientName: ingredientName },
-      { quantity: quantity }
-    );
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
 fridgeController.deleteIngredient = async (req, res, next) => {
-  const { ingredientName } = req.body;
+  const { _id } = req.body;
   try {
-    res.locals.deleteIng = await Fridge.findOneAndDelete({
-      ingredientName: ingredientName,
-    }); //or .deleteOne or .remove - findOne returns deleted doc
+    console.log("Deleting item with id", _id);
+    res.locals.deleteIng = await Fridge.findByIdAndDelete(_id); //or .deleteOne or .remove - findOne returns deleted doc
     return next();
   } catch (err) {
     return next({
