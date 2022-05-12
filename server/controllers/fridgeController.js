@@ -50,6 +50,7 @@ fridgeController.findIngredient = async (req, res, next) => {
 //caveat is that you can accidentally make duplicate sambucas lol
 fridgeController.addIngredient = async (req, res, next) => {
   const { ingredientName, quantity, unit } = req.body;
+
   try {
     res.locals.addIng = await Fridge.create({ ingredientName, quantity, unit });
     return next();
@@ -64,7 +65,9 @@ fridgeController.addIngredient = async (req, res, next) => {
 
 // https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
 fridgeController.updateIngredient = async (req, res, next) => {
-  const { ingredientName, quantity, unit } = req.body;
+  let { ingredientName, quantity, unit } = req.body;
+  ingredientName = ingredientName.trim();
+
   const filter = { ingredientName: ingredientName };
   const update = { quantity: quantity, unit: unit };
   const options = {
