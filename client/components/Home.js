@@ -8,9 +8,7 @@ const Home = (props) => {
   return (
     <div className="row justify-content-center">
       {allDrink.map((drink) => {
-        return (
-          <DrinkCard drink={drink} handleCardClick={props.handleCardClick} />
-        );
+        return <DrinkCard drink={drink} />;
       })}
       ;{/* <h1>Testing for Home</h1> */}
     </div>

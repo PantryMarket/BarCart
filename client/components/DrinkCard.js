@@ -18,7 +18,6 @@ const DrinkCard = (props) => {
         <div class="card-body">
           <h5 class="card-title">{name}</h5>
           <p class="card-text">{glassware}</p>
-          {/* <p class="card-text">{ingredients}</p> */}
         </div>
       </div>
     </div>

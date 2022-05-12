@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Fridge from './components/Fridge';
 import RecipeCard from './components/RecipeCard';
+import Filter from './components/Filter';
 
 const App = () => {
   //this.state={}
@@ -158,6 +159,7 @@ const App = () => {
                 )
               }
             ></Route>
+            <Route path="/filter" element={<Filter />}></Route>
           </Routes>
         </div>
       </Fragment>

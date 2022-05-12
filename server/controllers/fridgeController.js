@@ -69,7 +69,7 @@ fridgeController.updateIngredient = async (req, res, next) => {
   ingredientName = ingredientName.trim();
 
   const filter = { ingredientName: ingredientName };
-  const update = { quantity: quantity, unit: unit };
+  const update = { $inc: { quantity: quantity }, unit: unit };
   const options = {
     new: true, //if true, return the modified document rather than the original
     upsert: true, //bool - creates the object if it doesn't exist

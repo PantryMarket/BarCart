@@ -30,6 +30,8 @@ apiController.findRecipe = async (req, res, next) => {
   }
 };
 
+// User.find({ email: new RegExp(`^${res.locals.allIng}$`, 'i') })
+
 //https:stackoverflow.com/questions/66483465/how-do-i-filter-recipes-from-the-database
 
 apiController.possibleRecipes = async (req, res, next) => {
