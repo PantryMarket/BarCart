@@ -21,7 +21,7 @@ router.get(
 //* you should never add an ingredient you already have in your fridge, otherwise will end up with
 //  ex. multiple 'Absolute Vodka' objs
 router.post('/', fridgeController.updateIngredient, (req, res) =>
-  res.status(200).json('Ingredient Added')
+  res.status(200).json(res.locals.updatedIng)
 );
 
 //requires { ingredientName, quantity } in req.body

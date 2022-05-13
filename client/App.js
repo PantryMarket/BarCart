@@ -70,11 +70,12 @@ const App = () => {
       //stringify and send the state
       body: JSON.stringify(fridgeForm),
     })
-      .then(() => {
+      .then((res) => res.json())
+      .then((newEntry) => {
         let hasDup = false;
         const arr = ingredients.reduce((acc, curr) => {
-          if (curr.ingredientName === fridgeForm.ingredientName.trim()) {
-            curr.quantity += fridgeForm.quantity;
+          if (curr.ingredientName === newEntry.ingredientName.trim()) {
+            curr.quantity += newEntry.quantity;
             hasDup = true;
           }
           acc.push(curr);
@@ -82,7 +83,7 @@ const App = () => {
         }, []);
 
         setIngredients((prevIngredients) => {
-          return hasDup ? arr : [...prevIngredients, fridgeForm];
+          return hasDup ? arr : [...prevIngredients, newEntry];
         });
       })
       .then(() =>
