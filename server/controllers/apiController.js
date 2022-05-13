@@ -31,6 +31,7 @@ apiController.findRecipe = async (req, res, next) => {
 };
 
 // User.find({ email: new RegExp(`^${res.locals.allIng}$`, 'i') })
+// db.docs.find({items: {$elemMatch: {value: {$regex : "text"}}}});
 
 //https:stackoverflow.com/questions/66483465/how-do-i-filter-recipes-from-the-database
 
